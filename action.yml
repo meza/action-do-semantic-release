@@ -1,0 +1,26 @@
+name: 'Do a semantic release'
+inputs:
+  GH_TOKEN:
+    description: "The GitHub token"
+    required: true
+  DryRun:
+    description: "Run semantic-release in dry-run mode"
+    required: false
+    default: "false"
+outputs:
+  new-release-published:
+    description: "If a new release was published"
+    value: ${{ steps.get-next-version.outputs.new-release-published }}
+  new-release-version:
+    description: "The version of the new release"
+    value: ${{ steps.get-next-version.outputs.new-release-version }}
+
+runs:
+  using: "composite"
+  steps:
+    - run: npx semantic-release ${{ inputs.DryRun == 'true' && '--dry-run' || '' }}
+      shell: bash
+      name: 🧮 Get next version number
+      id: get-next-version
+      env:
+        GH_TOKEN: ${{ inputs.GH_TOKEN }}
