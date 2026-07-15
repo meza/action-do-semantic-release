@@ -1,4 +1,5 @@
 name: 'Do a semantic release'
+description: "Runs semantic-release and exposes the resulting release status and version"
 inputs:
   GH_TOKEN:
     description: "The GitHub token"
